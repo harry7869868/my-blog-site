@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Creator Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">CREATOR<span>SPACE</span></div>
+        <button id="adminBtn">Admin Login</button>
+    </nav>
+
+    <header>
+        <h1>Knowledge & Strategy</h1>
+        <p>Sharing insights on digital growth and puzzles.</p>
+    </header>
+
+    <main id="blog-container">
+        </main>
+
+    <div id="adminPanel" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create New Post</h2>
+            <input type="text" id="postTitle" placeholder="Post Title">
+            <textarea id="postContent" placeholder="Write your content here..." rows="5"></textarea>
+            <button id="savePost">Publish Post</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
