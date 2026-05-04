@@ -3,34 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Creator Blog</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Modern Tech Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-
-    <nav>
-        <div class="logo">CREATOR<span>SPACE</span></div>
-        <button id="adminBtn">Admin Login</button>
+<body class="bg-gray-50 font-sans">
+    <nav class="bg-white shadow-lg p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-blue-600">MyBlog</h1>
+        <a href="admin.html" class="text-gray-600 hover:text-blue-600">Admin</a>
     </nav>
 
-    <header>
-        <h1>Knowledge & Strategy</h1>
-        <p>Sharing insights on digital growth and puzzles.</p>
-    </header>
-
-    <main id="blog-container">
-        </main>
-
-    <div id="adminPanel" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Create New Post</h2>
-            <input type="text" id="postTitle" placeholder="Post Title">
-            <textarea id="postContent" placeholder="Write your content here..." rows="5"></textarea>
-            <button id="savePost">Publish Post</button>
+    <main class="max-w-4xl mx-auto mt-10 p-4">
+        <h2 class="text-3xl font-bold mb-6 text-gray-800">Latest Stories</h2>
+        <div id="posts-container" class="grid gap-6">
+            <p class="text-gray-500">Loading posts...</p>
         </div>
-    </div>
+    </main>
 
-    <script src="script.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Yahan apni config paste karein jo aapne nikali thi
+        const firebaseConfig = {
+            apiKey: "
+  apiKey: "AIzaSyCS7747elUnYtM3-KySPInrUD_vU1CBKH0",
+  authDomain: "myblogdb-3895f.firebaseapp.com",
+  projectId: "myblogdb-3895f",
+  storageBucket: "myblogdb-3895f.firebasestorage.app",
+  messagingSenderId: "577647019408",
+  appId: "1:577647019408:web:77d1ffd4312c0ae60adf15",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadPosts() {
+            const container = document.getElementById('posts-container');
+            const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+            const querySnapshot = await getDocs(q);
+            
+            container.innerHTML = '';
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                container.innerHTML += `
+                    <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500">
+                        <h3 class="text-xl font-bold text-gray-900">${post.title}</h3>
+                        <p class="text-gray-600 mt-2">${post.content}</p>
+                        <span class="text-xs text-gray-400 mt-4 block">Posted on: ${new Date(post.timestamp?.toDate()).toLocaleDateString()}</span>
+                    </div>
+                `;
+            });
+        }
+        loadPosts();
+    </script>
+</body>
+</html>
+  </script>
 </body>
 </html>
